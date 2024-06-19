@@ -340,3 +340,25 @@ db.prod.aggregate(
     }
 )
 
+use("blog");
+db.prod.find();
+
+use("blog");
+db.prod.aggregate([
+    //stage 1 : filter xTablet
+    {
+        $match:{
+            name:'xTablet'
+        }
+    },
+    //stage 2 : group by totalprice $sum
+    {
+        $group:{
+            _id:"$name",
+            totalprice:{
+                $sum:"$price"
+            }
+        }
+    }
+]);
+

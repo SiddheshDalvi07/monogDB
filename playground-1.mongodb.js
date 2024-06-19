@@ -362,3 +362,29 @@ db.prod.aggregate([
     }
 ]);
 
+
+use("blog");
+db.prod.aggregate([
+    
+
+    //stage 1 : group by totalprice $sum
+    {
+        $group:{
+            _id:"$name",
+            totalprice:{
+                $sum:"$price"
+            }
+        }
+    },
+    //stage 2 :  group based on name and find total price
+    {
+        $match:{
+            totalprice:{
+                $gt:700
+            }
+        }
+    },
+]);
+
+
+
